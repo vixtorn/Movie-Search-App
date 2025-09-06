@@ -1,0 +1,158 @@
+:root{
+  /* Renk paleti (Açık Tema) */
+  --bg: ##ffffff;            /* sayfa arka planı (arkayı koyu yapacağız, kartlar açık) */
+  --bg-soft: #111827;       /* header/footer */
+  --surface: #ffffff;       /* kart/modaI yüzeyi */
+  --text: #0f172a;          /* temel metin */
+  --muted: #6b7280;         /* ikincil metin */
+  --brand: #0b74ff;         /* vurgu */
+  --brand-2: #7c3aed;       /* ikincil vurgu */
+  --ring: rgba(11,116,255,.25);
+  --success:#16a34a; --danger:#ef4444; --warning:#f59e0b;
+
+  /* Tipografi & ölçek */
+  --radius: 14px;
+  --radius-sm: 10px;
+  --gap: 14px;
+  --shadow-1: 0 6px 20px rgba(2,8,23,.08);
+  --shadow-2: 0 10px 30px rgba(2,8,23,.12);
+
+  /* Animasyon */
+  --dur-1: .18s; --dur-2: .28s;
+}
+
+/* Karanlık tema — sadece yüzey/metin zıtlığını çeviriyoruz */
+:root.theme-dark{
+  --bg: #0b1220;
+  --bg-soft: #0f172a;
+  --surface: #0f172a;
+  --text: #e5e7eb;
+  --muted: #9ca3af;
+  --ring: rgba(124,58,237,.28);
+}
+
+/* Sistem temasını takip etmek istersen: */
+@media (prefers-color-scheme: dark){
+  :root:not(.theme-light){ /* manuel ışık modunu ezme */
+    --bg: #0b1220; --bg-soft: #0f172a; --surface:#0f172a;
+    --text:#e5e7eb; --muted:#9ca3af; --ring: rgba(124,58,237,.28);
+  }
+}
+
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(1200px 500px at 10% -10%, #1f2937 0%, transparent 60%),
+    radial-gradient(1000px 400px at 100% 0%, #0b74ff33 0%, transparent 60%),
+    var(--bg);
+}
+
+/* Konteyner ve header */
+.container{max-width:1100px;margin:0 auto;padding:16px}
+header.container{
+  display:grid; gap: var(--gap);
+  background: linear-gradient(180deg, var(--bg-soft), transparent);
+  border-bottom: 1px solid #111827;
+  border-image: linear-gradient(90deg, #0b74ff33, transparent, #7c3aed33) 1;
+  border-top: none;
+  padding-top: 28px;
+}
+h1{margin:8px 0 0;font-size: clamp(22px, 2.4vw, 28px); color:#e5e7eb}
+
+/* Arama çubuğu */
+.search-bar{display:flex;gap:10px;align-items:center}
+.search-bar input{
+  flex:1; padding:12px 14px; border-radius: var(--radius);
+  border:1px solid #233046; outline:none; font-size:16px;
+  background: linear-gradient(180deg, #0f172a, #0b1220);
+  color:#e5e7eb;
+}
+.search-bar input:focus{ box-shadow: 0 0 0 6px var(--ring); border-color:transparent }
+.search-bar button, .theme-toggle{
+  padding:12px 14px; border-radius: var(--radius); border:1px solid #233046;
+  background: linear-gradient(180deg, #0f172a, #0b1220);
+  color:#e5e7eb; cursor:pointer; transition: transform var(--dur-1);
+}
+.search-bar button:hover, .theme-toggle:hover{ transform: translateY(-1px); }
+
+/* Sekmeler */
+.tabs{display:flex;gap:8px; align-items:center}
+.tab{
+  border:1px solid #233046; background: #0f172a; color:#cbd5e1;
+  padding:8px 12px; border-radius:999px; cursor:pointer; transition: background var(--dur-1);
+}
+.tab.active{ background: linear-gradient(90deg, var(--brand), var(--brand-2)); color:white; border-color:transparent }
+
+/* Paneller & grid */
+.panel{display:none}
+.panel.active{display:block}
+.grid{display:grid; gap: var(--gap); grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));}
+
+/* Kart */
+.card{
+  background: var(--surface);
+  border: 1px solid #e5e9f333; border-radius: var(--radius);
+  overflow: hidden; display:flex; flex-direction:column;
+  box-shadow: var(--shadow-1); transition: transform var(--dur-2), box-shadow var(--dur-2);
+}
+.card:hover{ transform: translateY(-3px); box-shadow: var(--shadow-2) }
+.card__wrap{ position:relative }
+.card__img{ width:100%; aspect-ratio:2/3; object-fit:cover; display:block; background:#0b1220 }
+.card__fav{
+  position:absolute; right:10px; top:10px; border:none; cursor:pointer;
+  width:36px; height:36px; border-radius:999px; display:grid; place-items:center;
+  background: rgba(15,23,42,.5); backdrop-filter: blur(6px); color:#fff;
+}
+.card__body{ padding:12px; display:grid; gap:8px; }
+.card__title{ font-size:15px; font-weight:600; line-height:1.25; }
+.card__meta{ font-size:13px; color: var(--muted); display:flex; justify-content:space-between }
+.card__actions{ display:flex; justify-content:space-between; align-items:center; gap:8px }
+.btn{ padding:8px 10px; border-radius: 10px; border:1px solid #e5e9f366; background:#f8fafc; cursor:pointer; font-size:13px }
+.btn.primary{ background: linear-gradient(90deg, var(--brand), var(--brand-2)); color:white; border-color:transparent }
+.empty{ text-align:center; color: #94a3b8; padding: 24px }
+.hidden{ display:none !important }
+
+/* Modal */
+.modal{ position:fixed; inset:0; display:grid; place-items:center;
+  background: rgba(2,8,23,.5); backdrop-filter: blur(2px); }
+.modal.hidden{ display:none }
+.modal__content{
+  background: var(--surface); width:min(780px, 92vw); max-height:88vh; overflow:auto;
+  border-radius: 18px; border:1px solid #e5e9f333; padding: 18px; position:relative;
+  box-shadow: var(--shadow-2);
+}
+.modal__close{ position:absolute; right:10px; top:10px; border:1px solid #e5e9f333; background: var(--surface);
+  border-radius:999px; width:34px; height:34px; cursor:pointer; font-size:18px }
+
+.details{ display:grid; grid-template-columns: 180px 1fr; gap:16px }
+.details__poster{ width:100%; border-radius: 12px }
+.details__title{ margin:0 0 8px }
+.badge{ font-size:12px; padding:2px 6px; border-radius:999px; background:#eef2ff; border:1px solid #d6daf5 }
+.tags{ display:flex; flex-wrap:wrap; gap:6px }
+.footer{ color:#94a3b8; font-size:13px; text-align:center; }
+
+/* Focus erişilebilirliği */
+:where(button, [href], input):focus-visible{ outline: none; box-shadow: 0 0 0 6px var(--ring) }
+
+/* Hareket hassasiyeti */
+@media (prefers-reduced-motion: reduce){
+  *{ transition:none !important; animation:none !important }
+}
+
+/* Skeleton yükleyici */
+.skeleton{
+  border-radius: var(--radius-sm);
+  background: linear-gradient(90deg, #1f2937 25%, #2b374a 37%, #1f2937 63%);
+  background-size: 400% 100%;
+  animation: shine 1.4s ease-in-out infinite;
+}
+@keyframes shine{
+  0%{ background-position: 200% 0 }
+  100%{ background-position: -200% 0 }
+}
+.skel-card{ display:grid; grid-template-rows: 1fr auto; gap:10px; height:100% }
+.skel-img{ aspect-ratio:2/3 }
+.skel-line{ height:12px }

@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Film/Dizi Arama • TMDB</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="container">
+    <h1>🎬 Film/Dizi Arama</h1>
+    
+    <div class="search-bar">
+        <button class="theme-toggle" id="themeToggle" title="Tema">🌙</button>
+      <input id="search" placeholder="Film, dizi, anahtar kelime..." autocomplete="off" />
+      <button id="clear">Temizle</button>
+    </div>
+    <div class="tabs">
+      <button class="tab active" data-tab="results">Sonuçlar</button>
+      <button class="tab" data-tab="favorites">Favoriler</button>
+      <button class="tab" data-tab="trending">Trend</button>
+      
+
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="panel-results" class="panel active">
+      <div id="grid" class="grid"></div>
+      <div id="emptyResults" class="empty hidden">Aramak için yukarıdaki kutuyu kullanın.</div>
+    </section>
+
+    <section id="panel-favorites" class="panel">
+      <div id="gridFav" class="grid"></div>
+      <div id="emptyFav" class="empty hidden">Henüz favori yok.</div>
+    </section>
+
+    <section id="panel-trending" class="panel">
+      <div id="gridTrend" class="grid"></div>
+      <div id="emptyTrend" class="empty hidden">Trend verisi bulunamadı.</div>
+    </section>
+  </main>
+
+  <div id="modal" class="modal hidden" aria-hidden="true">
+    <div class="modal__content" role="dialog" aria-modal="true">
+      <button id="closeModal" class="modal__close" aria-label="Kapat">×</button>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+
+  <footer class="container footer">
+    <p>Veriler <a href="https://www.themoviedb.org/" target="_blank" rel="noopener">TMDB</a> üzerinden çekilir. Demo amaçlıdır. Ticari kullanım amacı taşımamaktadır.</p>
+  </footer>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
